@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Таблиця — стилізована під Мондріана</title>
+<style>
+  :root{
+    --thick: 14px; /* товщина чорних ліній */
+    --size: 720px; /* розмір таблиці (можна змінити) */
+  }
+
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    margin:0;
+    background:#f6f6f6;
+    font-family: sans-serif;
+  }
+
+  .mondrian-table {
+    width: var(--size);
+    height: var(--size);
+    border-collapse: collapse;
+    table-layout: fixed; /* щоб colspan працював передбачувано */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+
+  /* товсті чорні межі між комірками */
+  .mondrian-table td{
+    border: var(--thick) solid #000;
+    padding:0;
+    vertical-align: middle;
+  }
+
+  /* Встановимо мінімальні внутрішні відступи (не впливають на зовнішній вигляд блоків) */
+  .mondrian-table td > .content{
+    width:100%;
+    height:100%;
+    box-sizing:border-box;
+  }
+
+  /* Кольори */
+  .red   { background:#e41b17; }   /* червоний */
+  .yellow{ background:#ffd400; }   /* жовтий */
+  .blue  { background:#0b3dff; }   /* синій */
+  .black { background:#000; }      /* чорний */
+  .white { background:#ffffff; }   /* білий (порожні сегменти) }
+
+  /* Дрібні візуальні корекції: середні відступи всередині кольорових блоків (щоб не “липли” до рамок) */
+  .content { padding: 0; }
+
+  caption { 
+    caption-side: bottom;
+    padding-top:12px;
+    color:#333;
+    font-size:14px;
+  }
+
+  /* Робимо таблицю адаптивною при зменшенні екрану */
+  @media (max-width:800px){
+    :root{ --size: min(92vw, 720px); --thick: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<table class="mondrian-table" role="table" aria-label="Таблиця у стилі Мондріана">
+  <!-- Рядок 1:
+       - велике червоне поле: colspan=3 rowspan=3 (ліворуч згори)
+       - біла вузька комірка кол4
+       - жовта велика в правому верхньому кутку: colspan=2 rowspan=2
+  -->
+  <tr>
+    <td colspan="3" rowspan="3"><div class="content red"></div></td>
+    <td><div class="content white"></div></td>
+    <td colspan="2" rowspan="2"><div class="content yellow"></div></td>
+  </tr>
+
+  <!-- Рядок 2:
+       - перші 3 колонки зайняті червоним
+       - кол4 — біла (вузька)
+       - кол5-6 займає жовта (rowspan=2)
+  -->
+  <tr>
+    <td><div class="content white"></div></td>
+  </tr>
+
+  <!-- Рядок 3:
+       - перші 3 колонки — червоне (rowspan закінчився тут)
+       - кол4, кол5, кол6 — білі невеликі блоки
+  -->
+  <tr>
+    <td><div class="content white"></div></td>
+    <td><div class="content white"></div></td>
+  </tr>
+
+  <!-- Рядок 4:
+       - чорний блок зліва: colspan=2 rowspan=2
+       - кол3: біла
+       - кол4: біла
+       - праворуч синій блок: colspan=2 rowspan=2
+  -->
+  <tr>
+    <td colspan="2" rowspan="2"><div class="content black"></div></td>
+    <td><div class="content white"></div></td>
+    <td><div class="content white"></div></td>
+    <td colspan="2" rowspan="2"><div class="content blue"></div></td>
+  </tr>
+
+  <!-- Рядок 5:
+       - перші 2 колонки зайняті чорним (rowspan)
+       - кол3, кол4 — білі
+       - кол5-6 — синій (rowspan)
+  -->
+  <tr>
+    <td><div class="content white"></div></td>
+    <td><div class="content white"></div></td>
+  </tr>
+
+  <!-- Рядок 6 (нижній ряд):
+       - невеликий вертикальний жовтий в лівому краю (col1)
+       - середні білі блоки (заповнюють центр)
+       - праворуч тонка вертикальна червона смужка (col6)
+  -->
+  <tr>
+    <td><div class="content yellow"></div></td>
+    <td colspan="3"><div class="content white"></div></td>
+    <td><div class="content red"></div></td>
+  </tr>
+
+  <caption>Таблиця — макет у стилі Мондріана. Використано colspan/rowspan (без прихованих рядків/стовпців).</caption>
+</table>
+
+</body>
+</html>
